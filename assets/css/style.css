@@ -1,41 +1,134 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
-    background-color: #e1e1e1;
+    background-color:#c9cacc;
+
 }
 
 header {
-    background-color:#c9cacc;
-    min-height: 200px;
-    min-width: 100%;
+    display: grid;
+    grid-area: hd;
     position: relative;
     border-bottom: 2px solid white;
 }
 
-.header-box {
+main {
+    display: grid;
+    grid-area: main;
+}
+
+footer {
+    display: grid;
+    grid-area: ft;
+}
+
+h1, p {
+    margin: 0;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: 30px 170px auto 50px;
+    grid-template-areas: 
+        ". . . . . . . . . ."
+        "hd hd hd hd hd hd hd hd hd hd"
+        "main main main main main main main main main main"
+        "ft ft ft ft ft ft ft ft ft ft";
+}
+
+.wrapper {
+    display: grid;
     width: 95%;
-    height: 170px;
+    justify-self: center;
+}
+
+.header-box {
+    grid-template-columns: 1fr 1fr;
     background: linear-gradient(#19f706 60%, #10bc1c);
-    padding: 0;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -2px;
-    margin: auto;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     border: #b1b1b1 2px solid;
     border-bottom: none;
+    margin-bottom: -2px;
+}
+
+.search {
+    display: grid;
+    grid-template-columns: 1fr;
+    background: url(../images/site/headerGearTing.png) no-repeat;
+    background-position: right bottom;
+}
+
+.search > form {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-self: center;
+    justify-self: end;
+    z-index: 9999;
+}
+
+.search > form > #search {
+    grid-column: 1/3;
+}
+
+.search > form > #btn_search {
+    grid-column: 1;
+}
+
+.search > form > #adv_search {
+    grid-column: 2/3;
+    align-self: end;
+    color: white;
+    text-decoration: none;
+    font-size: 11px;
+    padding-left: 2px;
+}
+
+.search > form > #adv_search:hover {
+    color: black;
 }
 
 .site-logo {
+    align-self: center;
+}
+
+.logo-text {
     color: white;
-    margin: auto 0;
+    padding-left: 50px;
 }
 
 
-.header-image {
-    position: absolute;
-    bottom: 0;
-    right: 0;
+.mainContent {
+    grid-template-columns: 1fr;
+    border: 2px solid #b1b1b1;
 }
+
+.nav-wrapper {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    border-bottom: 2px solid #b1b1b1;
+}
+
+.nav-wrapper > .navbar {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: 30px;
+    grid-column: 1/5;
+}
+
+.nav-wrapper > .navbar > .link {
+    text-align: center;
+    line-height: 30px;
+    text-decoration: none;
+    color: #000;
+    border-right: 2px solid #b1b1b1;
+}
+
+.nav-wrapper > .navbar > .link:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+
+

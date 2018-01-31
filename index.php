@@ -14,12 +14,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>City Cykler</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
+    <div class="container">
     <header>
         <?php include_once './includes/header.php'; ?>
     </header>
+    <main>
+        <div class="mainContent wrapper">
+                <?php include_once './includes/nav.php'; ?>
     <?php
          if($security->secGetMethod('GET') || $security->secGetMethod('POST')) {
             $get = $security->secGetInputArray(INPUT_GET);
@@ -40,5 +44,8 @@
         }
     }
     ?>
+    </div>
+    </main>
+</div>
 </body>
 </html>

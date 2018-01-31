@@ -1,4 +1,14 @@
-<div class="header-box">
-<h1 class="site-logo">City Cykler</h1>
-<img src="./assets/images/site/headerGearTing.png" alt="gear logo" class="header-image">
+<div class="header-box wrapper">
+    <div class="site-logo">
+    <div class="logo-text">
+        <h1>City Cykler</h1>
+        <p>Alverdens Cykler</p>
+    </div>
+    </div>
+    <div class="search">
+        <form method="post">
+            <input type="text" name="search" id="search"><br>
+            <input type="submit" value="Søg" name="btn_search" id="btn_search"><a id="adv_search" href="#">Avanceret søgning</a>
+        </form>
+    </div>
 </div>
