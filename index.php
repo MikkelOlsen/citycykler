@@ -34,6 +34,10 @@
                             case 'forside':
                                 include_once './partials/home.php';
                                 break;
+                            
+                            case 'cykler':
+                                include_once './partials/bicycles.php';
+                                break;
 
 
                             default:
