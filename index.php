@@ -17,35 +17,43 @@
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
-    <div class="container">
-    <header>
-        <?php include_once './includes/header.php'; ?>
-    </header>
-    <main>
-        <div class="mainContent wrapper">
+    <div class="mainContainer">
+            <header>
+                <?php include_once './includes/header.php'; ?>
+            </header>
+            <main>
+                <div class="mainContent wrapper">
                 <?php include_once './includes/nav.php'; ?>
-    <?php
-         if($security->secGetMethod('GET') || $security->secGetMethod('POST')) {
-            $get = $security->secGetInputArray(INPUT_GET);
-            if(isset($get['p']) && !empty($get['p'])) {
-                switch ($get['p']) {
-                    case 'forside':
-                        include_once './partials/home.php';
-                        break;
+                    <div class="container">
+                        <div class="pageContent">
+            <?php
+                if($security->secGetMethod('GET') || $security->secGetMethod('POST')) {
+                    $get = $security->secGetInputArray(INPUT_GET);
+                    if(isset($get['p']) && !empty($get['p'])) {
+                        switch ($get['p']) {
+                            case 'forside':
+                                include_once './partials/home.php';
+                                break;
 
 
-                    default:
+                            default:
+                                header('Location: index.php?p=forside');
+                                break;
+                        }
+                    }
+                    else {
                         header('Location: index.php?p=forside');
-                        break;
                 }
             }
-            else {
-                header('Location: index.php?p=forside');
-        }
-    }
-    ?>
+            ?>
+                        </div>
+                    <?php include_once './includes/aside.php'; ?>
+                    </div>
+                </div>
+            </main>
+            <footer>
+                <?php include_once './includes/footer.php'; ?>
+            </footer>
     </div>
-    </main>
-</div>
 </body>
 </html>

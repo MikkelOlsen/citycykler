@@ -1,15 +1,20 @@
+/*=============================================
+=              Overall Styling                =
+=============================================*/
+
 body {
+    display: grid;
+    justify-items: center;
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
-    background-color:#c9cacc;
-
+    background-color:#fff;
 }
 
 header {
     display: grid;
     grid-area: hd;
     position: relative;
-    border-bottom: 2px solid white;
+    background-color:#c9cacc;
 }
 
 main {
@@ -26,31 +31,58 @@ h1, p {
     margin: 0;
 }
 
-.container {
+p {
+    font-size: 12px;
+}
+
+.mainContainer {
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: 30px 170px auto 50px;
+    grid-template-rows: 200px auto 30px;
     grid-template-areas: 
-        ". . . . . . . . . ."
         "hd hd hd hd hd hd hd hd hd hd"
         "main main main main main main main main main main"
         "ft ft ft ft ft ft ft ft ft ft";
 }
 
 .wrapper {
+    width: 960px;
     display: grid;
-    width: 95%;
     justify-self: center;
 }
 
+.container {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    padding: 20px;
+}
+
+.pageContent {
+    display: grid;
+    grid-column: 1/8;
+}
+
+
+
+/*=====  End of Overall Styling  ======*/
+
+
+
+
+/*=============================================
+=                  Header CSS                 =
+=============================================*/
+
 .header-box {
+    height: 170px;
+    align-self: end;
     grid-template-columns: 1fr 1fr;
     background: linear-gradient(#19f706 60%, #10bc1c);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     border: #b1b1b1 2px solid;
     border-bottom: none;
-    margin-bottom: -2px;
 }
 
 .search {
@@ -58,6 +90,7 @@ h1, p {
     grid-template-columns: 1fr;
     background: url(../images/site/headerGearTing.png) no-repeat;
     background-position: right bottom;
+    background-size: auto 170px;
 }
 
 .search > form {
@@ -99,6 +132,16 @@ h1, p {
 }
 
 
+/*=====  End of Header CSS ======*/
+
+
+
+
+
+/*=============================================
+=               Main content CSS              =
+=============================================*/
+
 .mainContent {
     grid-template-columns: 1fr;
     border: 2px solid #b1b1b1;
@@ -106,18 +149,20 @@ h1, p {
 
 .nav-wrapper {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(10, 1fr);
     border-bottom: 2px solid #b1b1b1;
+    background-color:#c9cacc;
 }
 
 .nav-wrapper > .navbar {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-column: 1/8;
     grid-auto-rows: 30px;
-    grid-column: 1/5;
+    grid-template-columns: repeat(5, 1fr);
 }
 
 .nav-wrapper > .navbar > .link {
+    font-size: 12px;
     text-align: center;
     line-height: 30px;
     text-decoration: none;
@@ -126,9 +171,120 @@ h1, p {
 }
 
 .nav-wrapper > .navbar > .link:hover {
-    background-color: #000;
+    background-color: #767676;
     color: #fff;
 }
 
+.siteTitel {
+    color:#FF9E41;
+    font-size: 17px;
+    font-weight: bold;
+    margin-top: 0;
+}
+
+/*=====  End of Main content CSS  ======*/
+
+
+
+
+/*=============================================
+=                 Footer CSS                  =
+=============================================*/
+
+.footerContent {
+    grid-template-columns: 1fr;
+    border: 2px solid #b1b1b1;
+    border-top: none;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color:#c9cacc;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+}
+
+.footerContent > .footerInfo {
+    display: flex;
+}
+
+.footerContent > .footerInfo > p {
+    color: #a4a4a4;
+}
+
+/*=====  End of Footer CSS  ======*/
+
+
+
+/*=============================================
+=                  Aside CSS                  =
+=============================================*/
+
+.aside {
+    display: grid;
+    align-items: center;
+    padding-bottom: 20px;
+    grid-column: span 3;
+}
+
+.aside > .offers {
+    display: grid;
+    justify-items: center;
+}
+
+.aside > .offers > p {
+    line-height: 1.3em;
+}
+
+.aside > .offers > p > .prevPrice {
+    position: relative;
+    display: inline-block;
+}
+
+.aside > .offers > p > .prevPrice::before {
+    content: '';
+    border-bottom: 1px solid black;
+    width: 100%;
+    position: absolute;
+    right: 0;
+    top: 50%;
+}
+
+.aside > .offers > .newPrice {
+    color: red;
+}
+
+.aside > .offers > img {
+    height: 80px;
+}
+
+
+/*=====  End of Aside CSS  ======*/
+
+
+
+
+
+/*=============================================
+=                Frontpage CSS                =
+=============================================*/
+
+.homeContent > article {
+    display: block;
+}
+
+.homeContent > article > p{
+    width: 100%;
+}
+
+.homeContent > article > img {
+    max-height: 204px;
+    max-width: 268px;
+    float: right; 
+    margin: 0px 15px 15px 10px;
+}
+
+
+
+/*=====  End of Frontpage CSS  ======*/
 
 

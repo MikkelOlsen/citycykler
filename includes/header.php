@@ -8,7 +8,7 @@
     <div class="search">
         <form method="post">
             <input type="text" name="search" id="search"><br>
-            <input type="submit" value="Søg" name="btn_search" id="btn_search"><a id="adv_search" href="#">Avanceret søgning</a>
+            <input type="submit" value="Søg" name="btn_search" id="btn_search"><a id="adv_search" href="#">Avanceret søg</a>
         </form>
     </div>
 </div>
