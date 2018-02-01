@@ -39,6 +39,9 @@
                                 include_once './partials/bicycles.php';
                                 break;
 
+                            case 'cykelliste':
+                                include_once './partials/bicycleList.php';
+                                break;
 
                             default:
                                 header('Location: index.php?p=forside');
