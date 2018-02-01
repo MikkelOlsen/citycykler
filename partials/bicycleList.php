@@ -1,5 +1,4 @@
 <div class="productContent">
-    <h3 class="siteTitel">Racercykler</h3>
     <section class="productList">
         <div class="productInfo">
             <h3 class="siteTitel">Den enkelte cykel</h3>

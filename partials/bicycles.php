@@ -1,5 +1,4 @@
 <div class="bicyclesContent">
-        <h2 class="siteTitel">Cykler</h2>
     <section class="categories">
         <a href="?p=cykelliste">
             <div>

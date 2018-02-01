@@ -5,6 +5,7 @@
         
         $security = new Security($db);
 
+        $pageTitel = ucfirst($_GET['p']);
     ?>
 
 <!DOCTYPE html>
@@ -25,6 +26,11 @@
                 <div class="mainContent wrapper">
                 <?php include_once './includes/nav.php'; ?>
                     <div class="container">
+                    <div class="headerTitles">
+                        <h2 class="siteTitel"><?= $pageTitel ?></h2>
+                        <h2 class="siteTitel">Tilbud</h2>
+                    </div>
+                    <div class="content">
                         <div class="pageContent">
             <?php
                 if($security->secGetMethod('GET') || $security->secGetMethod('POST')) {
@@ -54,8 +60,10 @@
             }
             ?>
                         </div>
+                        <div class="streg"></div>
                     <?php include_once './includes/aside.php'; ?>
                     </div>
+        </div>
                 </div>
             </main>
             <footer>

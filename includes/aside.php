@@ -1,5 +1,4 @@
 <div class="aside">
-    <h2 class="siteTitel">Tilbud</h2>
     <div class="offers">
         <h3>Produkt Titel</h3>
         <img src="./assets/images/products/Cykler/barn1.jpg" alt="">

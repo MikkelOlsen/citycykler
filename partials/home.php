@@ -1,5 +1,4 @@
 <div class="homeContent">
-    <h2 class="siteTitel">Forside</h2>
     <article>
     <img src="./assets/images/site/forsideImg.png" alt="frontpageImg">
         <p>Velkommen til City Cykler <br> <br>
