@@ -12,7 +12,7 @@ class Pages extends \PDO
 
     public function getPageData()
     {
-        return $this->db->single("SELECT * FROM pagecontent");
+        return $this->db->single("SELECT pageName, pageText, filepath, filename, mime FROM pagecontent INNER JOIN media on mediaId = pageImage");
     }
     
 
