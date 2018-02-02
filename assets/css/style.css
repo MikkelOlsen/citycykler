@@ -65,7 +65,7 @@ p {
 
 .content {
     display: grid;
-    grid-template-columns: auto 3px 240px;
+    grid-template-columns: auto 2px 240px;
     grid-template-areas: "content streg offers";
     grid-column-gap: 20px;
 }
@@ -73,13 +73,13 @@ p {
 .pageContent {
     display: grid;
     grid-area: content;
-    border-top: 2px solid #ededed;
+    border-top: 2px solid #c7c7c7;
     padding-top: 10px;
 }
 
 .streg {
     grid-area: streg;
-    background-color: #ededed;
+    background-color: #c7c7c7;
     height: 85%;
     margin-top: 10px;
 }
@@ -243,7 +243,7 @@ p {
     display: grid;
     align-items: center;
     padding-bottom: 20px;
-    border-top: 2px solid #ededed;
+    border-top: 2px solid #c7c7c7;
     padding-top: 10px;
     box-sizing: border-box;
 }

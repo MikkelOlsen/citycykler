@@ -5,16 +5,22 @@
 	define('_DB_PASSWORD_', 'mast3rdr4gon');
 	define('_DB_PREFIX_', '');
 	define('_MYSQL_ENGINE_', 'InnoDB');
+	define('_CLASSES_', __DIR__.'/Classes');
+	define('_CLASSDIR_', glob(_CLASSES_ . '/*' , GLOB_ONLYDIR));
 	
 	function ClassLoader(string $className)
-	{
-	    $className = str_replace('\\', '/', $className);
-	    if(file_exists(__DIR__ .'/classes/'. $className . '.php')){
-	      require_once(__DIR__ .'/classes/'. $className . '.php');
-	    } else {
-	      echo 'ERROR: '. __DIR__ .'/classes/'. $className . '.php';
-	    }
+			{
+							$className = str_replace('\\', '/', $className);
+							if(file_exists($className)){
+									require_once($className);
+							} else {
+									echo 'ERROR:'. $className;
+							}
+			}
+	foreach(_CLASSDIR_ as $direc) {
+			foreach(glob($direc.'/*'.'.php') as $file) {
+					ClassLoader($file);
+			}
 	}
-	spl_autoload_register('ClassLoader');
 
 	$db = new DB('mysql:host='._DB_HOST_.';dbname='._DB_NAME_.';charset=utf8',_DB_USER_,_DB_PASSWORD_);
