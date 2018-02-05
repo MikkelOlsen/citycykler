@@ -16,7 +16,10 @@
         if(isset($_GET['kategori'])) {
             $cat = new Products($db);
             $catName = $cat->getCatName($_GET['kategori']);
-            $catName = ' - '.$catName->categoryName;
+            if(sizeof($catName) > 0) {
+                $catName = $catName->categoryName;
+                $pageTitel = '';
+            }
         }
     ?>
 
@@ -67,6 +70,10 @@
 
                             case 'kontakt':
                                 include_once './partials/contact.php';
+                                break;
+
+                            case 'nyheder':
+                                include_once './partials/news.php';
                                 break;
 
                             default:

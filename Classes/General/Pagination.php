@@ -19,17 +19,17 @@ class Pagination extends \PDO
         return $startingPostion;
     }
 
-    public function pagingLink($query, $recordsPerPage, $params)
+    public function pagingLink($query, $recordsPerPage, $params, $getParam)
     {
         $category = '';
         if(isset($_GET['kategori'])) {
             $category = '&kategori='.$_GET['kategori'];
         }
+        // foreach($_GET as $get => $value) { if($get !== 'p' && $get !== 'side_tal') { echo 'get: '.$get.' value: '.$value.'<br>'; } }
         
         $stmt = $this->db->query($query, $params);
 
         $totalAmount = sizeof($stmt);
-
         if($totalAmount > 3) {
             echo '<table id="data" class="pagination">';
             echo '<tr><td>';
@@ -40,9 +40,23 @@ class Pagination extends \PDO
             }       
             for($i = 1; $i <= $totalPages; $i++) {
                 if($i == $currentPage) {
-                    echo '<a href="?p=produktliste'.$category.'&side_tal='.$i.'" style="border:none;cursor:default">'.$i.'</a>&nbsp;&nbsp;';
+                    $link = '<a href="?p=produktliste';
+                    foreach($getParam as $get => $value) { 
+                        if($get !== 'p' && $get !== 'side_tal') { 
+                            $link .= '&'.$get.'='.$value; 
+                        } 
+                    }
+                    $link .= '&side_tal='.$i.'" style="border:none;cursor:default">'.$i.'</a>&nbsp;&nbsp;';
+                    echo $link;
                 } else {
-                    echo '<a href="?p=produktliste'.$category.'&side_tal='.$i.'">'.$i.'</a>&nbsp;&nbsp;';
+                    $link = '<a href="?p=produktliste';
+                    foreach($getParam as $get => $value) { 
+                        if($get !== 'p' && $get !== 'side_tal') { 
+                            $link .= '&'.$get.'='.$value; 
+                        } 
+                    }
+                    $link .= '&side_tal='.$i.'">'.$i.'</a>&nbsp;&nbsp;';
+                    echo $link;
                 }
             }
             

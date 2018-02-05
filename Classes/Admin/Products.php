@@ -180,6 +180,26 @@ class Products extends \PDO
         return $results;
     } 
 
+    public function newProducts(int $startingPos, int $prodPerPage)
+    {
+
+        $stmt = $this->db->prepare("SELECT productId, productTitle, productDesc, productPrice, productModel, mediaId, filepath, filename, mime, categoryName, categoryTypeName
+                                  FROM products
+                                  INNER JOIN category 
+                                  ON products.fkCategory = category.categoryId
+                                  INNER JOIN categorytype
+                                  ON category.categoryType = categorytype.categoryTypeId
+                                  INNER JOIN media 
+                                  ON products.fkImage = media.mediaId
+                                  ORDER BY productId DESC
+                                  LIMIT :startPos, :prodPerPage");
+        $stmt->bindValue(':startPos', $startingPos, PDO::PARAM_INT);
+        $stmt->bindValue(':prodPerPage', $prodPerPage, PDO::PARAM_INT);
+        $stmt->execute() or die(print_r($stmt->errorInfo()));
+        $results = $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $results;
+    } 
+
     public function searchProducts(string $search, int $startingPos, int $prodPerPage)
     {
         $stmt = $this->db->prepare("SELECT productId, productTitle, productDesc, productPrice, productModel, mediaId, filepath, filename, mime, categoryName, categoryTypeName
@@ -213,6 +233,24 @@ class Products extends \PDO
                                   ON products.fkImage = media.mediaId
                                   ORDER BY RAND()
                                   LIMIT 3");
+    }
+
+    public function getAllProductsFrontEnd($startingPos, $prodPerPage)
+    {
+        $stmt = $this->db->prepare("SELECT productId, productTitle, productDesc, productPrice, productModel, mediaId, filepath, filename, mime, categoryName, categoryTypeName
+                                    FROM products
+                                    INNER JOIN category 
+                                    ON products.fkCategory = category.categoryId
+                                    INNER JOIN categorytype
+                                    ON category.categoryType = categorytype.categoryTypeId
+                                    INNER JOIN media 
+                                    ON products.fkImage = media.mediaId
+                                    LIMIT :startPos, :prodPerPage");
+        $stmt->bindValue(':startPos', $startingPos, PDO::PARAM_INT);
+        $stmt->bindValue(':prodPerPage', $prodPerPage, PDO::PARAM_INT);
+        $stmt->execute() or die(print_r($stmt->errorInfo()));
+        $results = $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $results;
     }
 
     public function getOffer($id)
