@@ -15,7 +15,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Login V12</title>
+	<title>City Cykler - Admin</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -39,12 +39,12 @@
 <body>
 	
 	<div class="limiter">
-		<div class="container-login100" style="background-image: url('images/img-01.jpg');">
+		<div class="container-login100" style="background-image: url('./assets/images/img-01.jpg');">
 			<div class="wrap-login100 p-t-190 p-b-30">
 				<form class="login100-form validate-form" id="login" method="post">
 
 					<span class="login100-form-title p-t-20 p-b-45">
-						Admin Login - CityCykler
+						Admin Login - City Cykler
 					</span>
 
                     <?= @$error ?>
