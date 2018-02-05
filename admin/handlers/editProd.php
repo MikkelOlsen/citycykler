@@ -21,6 +21,7 @@
 
     if(isset($_POST['btn_update'])) {
         $post = $security->secGetInputArray(INPUT_POST);   
+        // var_dump($post);
         $error = [];
         $post['title'] = $validate->stringBetween($post['title'], 2, 30) ? $post['title'] : $error['title'] = '<div class="error">Produkt titel skal være mellem 2 og 30 tegn.</div>';
         $post['brand'] = $validate->stringBetween($post['brand'], 1, sizeof($brands)) ? $post['brand'] : $error['brand'] = '<div class="error">Du skal vælge et produkt mærke.</div>';
@@ -72,7 +73,7 @@
             } 
             
         }
-        if(sizeof($error)) {
+        if(sizeof($error) == 0) {
             $products->editProd($_GET['id'], $post);
             $products->offerHandler($_GET['id'], $post['offerPrice']);
             $currentProd = $products->getProd($_GET['id']); 

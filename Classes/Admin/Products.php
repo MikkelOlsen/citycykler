@@ -107,7 +107,7 @@ class Products extends \PDO
     public function newProd(string $mediaId, array $post)
     {
         try {
-            return $this->db->lastId("INSERT INTO `products`(`productTitle`, `productDesc`, `productPrice`, `fkCategory`, `fkImage`, `productModel`) 
+            return $this->db->lastId("INSERT INTO `products`(`productTitle`, `productDesc`, `productPrice`, `fkCategory`, `fkImage`, `productBrand`) 
                               VALUES (:title, :description, :price, :category, :image, :brand)", 
                               [
                                   ':title' => $post['title'],
@@ -357,8 +357,10 @@ class Products extends \PDO
 
     public function getProd($id)
     {
-        return $this->db->single("  SELECT productId, productTitle, productDesc, productPrice, productBrand, mediaId, filepath, filename, mime, fkCategory, fkImage
+        return $this->db->single("  SELECT productId, productTitle, productDesc, productPrice, brandName, mediaId, filepath, filename, mime, fkCategory, fkImage
                                     FROM products
+                                    INNER JOIN productBrand
+                                    ON products.productBrand = productbrand.brandId
                                     INNER JOIN category 
                                     ON products.fkCategory = category.categoryId
                                     INNER JOIN categorytype

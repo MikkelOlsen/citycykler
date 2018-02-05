@@ -30,7 +30,7 @@ class Pagination extends \PDO
         $stmt = $this->db->query($query, $params);
         
         $totalAmount = sizeof($stmt);
-        if($totalAmount > 2) {
+        if($totalAmount > $recordsPerPage) {
             echo '<table id="data" class="pagination">';
             echo '<tr><td>';
             $totalPages = ceil($totalAmount/$recordsPerPage);

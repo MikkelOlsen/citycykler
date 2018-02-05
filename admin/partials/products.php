@@ -55,20 +55,22 @@ if(isset($_POST['btn_create'])) {
                 'create' => true
             );
         $mediaId = $imageHandler->imageHandler($_FILES['files'], $options) ? $imageHandler->imageHandler($_FILES['files'], $options) : $error['image'] = '<div class="error">Den uploade fil er ikke af en gyldig type.</div>';   
+        var_dump($error);
         if(sizeof($error) == 0)  {
-            $prodId = $products->newProd($mediaId, $_POST);
+            echo 'yes!';
+            $prodId = $products->newProd($mediaId, $post);
+            if($products->insertColors($prodId, $_POST['colors']) == true) {
+                $productList = $products->getProducts();
+            }
         }
 
-        if($products->insertColors($prodId, $_POST['colors']) == true) {
-            $productList = $products->getProducts();
-        }
     }
 }
 
 ?>
 
 <div class="categoryAdmin">
-    <table class="customTable">
+    <table class="customTable prodTable">
         <thead>
         <tr>
             <th>Produkt Model</th>

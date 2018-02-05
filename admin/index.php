@@ -100,6 +100,7 @@
                 </div>
             </div>
         </main>   
+        <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
         <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
         <script src="https://cdn.ckeditor.com/ckeditor5/1.0.0-alpha.2/classic/ckeditor.js"></script>
         <script src="./assets/js/multiselect.min.js"></script>
