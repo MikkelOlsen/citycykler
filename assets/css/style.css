@@ -497,3 +497,34 @@ p {
 /*=====  End of CONTANT CSS  ======*/
 
 
+
+/*=============================================
+=              ADVANCED SEARCH CSS            =
+=============================================*/
+
+
+.advSearch {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    height: 100px;
+    grid-gap: 25px;
+}
+
+.advSearch > div:nth-child(even) {
+    display: grid;
+    grid-template-columns: 100px auto 50px;
+    justify-items: center;
+    align-items: center;
+}
+
+.advSearch > div:nth-child(odd) {
+    display: grid;
+    grid-template-columns: 100px auto;
+    justify-items: center;
+    align-items: center;
+}
+
+
+/*=====  End of ADVANCED SEARCH CSS  ======*/
+
+

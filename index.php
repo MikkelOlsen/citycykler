@@ -76,6 +76,10 @@
                                 include_once './partials/news.php';
                                 break;
 
+                            case 'avanceret':
+                                include_once './partials/advSearch.php';
+                                break;
+
                             default:
                                 header('Location: index.php?p=forside');
                                 break;

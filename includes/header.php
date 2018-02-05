@@ -1,6 +1,6 @@
 <?php
     if(isset($_POST['btn_search'])){
-        header('Location: ?p=produktliste&search='.$_POST['search']);
+        header('Location: ?p=avanceret&searchWord='.$_POST['search']);
     }
 ?>
 
@@ -14,7 +14,7 @@
     <div class="search">
         <form method="post">
             <input type="text" name="search" id="search"><br>
-            <input type="submit" value="Søg" name="btn_search" id="btn_search"><a id="adv_search" href="#">Avanceret søg</a>
+            <input type="submit" value="Søg" name="btn_search" id="btn_search"><a id="adv_search" href="?p=avanceret">Avanceret søg</a>
         </form>
     </div>
 </div>

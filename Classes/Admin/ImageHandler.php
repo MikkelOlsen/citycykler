@@ -53,7 +53,7 @@ class ImageHandler extends \PDO {
                     break;
                 }
             } else {
-                echo 'not valid';
+                return false;
             } 
         }
         

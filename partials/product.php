@@ -11,7 +11,7 @@
     <img src="<?= $stripped ?>/168x116_<?= $currentProd->filename ?>.<?= $currentProd->mime ?>" alt="<?= $currentProd->productTitle ?>">
 
     <div class="productInformation">
-        <h3 class="siteTitel"><?= $currentProd->productModel ?> <?= $currentProd->productTitle ?></h3>
+        <h3 class="siteTitel"><?= $currentProd->brandName ?> <?= $currentProd->productTitle ?></h3>
         <br>
         <p><?= $currentProd->productDesc ?></p>
     </div>

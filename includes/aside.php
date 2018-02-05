@@ -11,7 +11,7 @@
                 $pos = strrpos($product->filepath, ".");
                 $stripped = substr($product->filepath, $pos);
                 echo '<a href="?p=produkt&id='.$product->productId.'">';
-                echo '<h3>'.$product->productModel.' '.$product->productTitle.'</h3>';
+                echo '<h3>'.$product->brandName.' '.$product->productTitle.'</h3>';
                 echo '<img src="'.$stripped.'/69x48_'.$product->filename.'.'.$product->mime.'" alt="'.$product->productTitle.'">';
                 echo '<p>Før <span class="prevPrice">'.$product->productPrice.'</span> kr.</p>';
                 echo '<p class="newPrice">Nu kun '.$product->offerPrice.' kr.</p>';

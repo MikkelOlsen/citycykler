@@ -91,6 +91,7 @@ class Validate{
     {
         if(isset($num) && strlen($num) >= 8 ){
             $num = str_replace(' ', '', $num);
+            $num = preg_replace('/[^0-9]/', '', $num);
             $num = (int)preg_replace("/(^[+]\d{2} | ^00\d{2})/x", "", $num);
             if(is_numeric($num)){
                 $this->phoneFormatted = $num;

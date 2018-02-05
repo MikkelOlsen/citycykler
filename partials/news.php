@@ -23,7 +23,7 @@
                 $stripped = substr($product->filepath, $pos);
                 echo '<section class="productList">';
                 echo '<div class="productInfo">';
-                echo '<h3 class="siteTitel">'.$product->productModel.' '.$product->productTitle.'</h3>';
+                echo '<h3 class="siteTitel">'.$product->brandName.' '.$product->productTitle.'</h3>';
                 echo '<p>'.$product->productDesc.'</p>';
                 echo '<div class="productPrice">';
                 echo $price;

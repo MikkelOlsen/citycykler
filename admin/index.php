@@ -2,8 +2,10 @@
         ob_start();
         session_start();
         require_once '../config.php';
+        $user = new User($db);
+        if($user->loginCheck($_SESSION['user']) == true) {
         $security = new Security($db);
-
+        $validate = new Validate($db);
     ?>
 
 <!DOCTYPE html>
@@ -67,6 +69,22 @@
                             case 'sitesettings':
                                 include_once './handlers/siteSettings.php';
                                 break;
+
+                            case 'brands':
+                                include_once './partials/brands.php';
+                                break;
+
+                            case 'delBrand':
+                                include_once './handlers/delBrand.php';
+                                break;
+                            
+                            case 'editBrand':
+                                include_once './handlers/editBrand.php';
+                                break;
+                            
+                            case 'logout':
+                                include_once './partials/logout.php';
+                                break;
                             
                             
 
@@ -88,3 +106,9 @@
         <script src="./assets/js/inits.js"></script>
     </body>
 </html>
+<?php
+
+        } else {
+            header('location: login.php');
+        }
+?>

@@ -149,12 +149,14 @@ class Products extends \PDO
 
     public function getProducts()
     {
-        return $this->db->query("SELECT productId, productTitle, productDesc, productPrice, productModel, mediaId, filename, mime, categoryName, categoryTypeName
+        return $this->db->query("SELECT productId, productTitle, productDesc, productPrice, brandName, mediaId, filename, mime, categoryName, categoryTypeName
                                   FROM products
                                   INNER JOIN category 
                                   ON products.fkCategory = category.categoryId
                                   INNER JOIN categorytype
                                   ON category.categoryType = categorytype.categoryTypeId
+                                  INNER JOIN productBrand 
+                                  ON products.productBrand = productbrand.brandId
                                   INNER JOIN media 
                                   ON products.fkImage = media.mediaId");
     }
@@ -162,12 +164,14 @@ class Products extends \PDO
     public function getProductsFrontend(int $id, int $startingPos, int $prodPerPage)
     {
 
-        $stmt = $this->db->prepare("SELECT productId, productTitle, productDesc, productPrice, productModel, mediaId, filepath, filename, mime, categoryName, categoryTypeName
+        $stmt = $this->db->prepare("SELECT productId, productTitle, productDesc, productPrice, brandName, mediaId, filepath, filename, mime, categoryName, categoryTypeName
                                   FROM products
                                   INNER JOIN category 
                                   ON products.fkCategory = category.categoryId
                                   INNER JOIN categorytype
                                   ON category.categoryType = categorytype.categoryTypeId
+                                  INNER JOIN productBrand
+                                  ON products.productBrand = productbrand.brandId
                                   INNER JOIN media 
                                   ON products.fkImage = media.mediaId
                                   WHERE fkCategory = :id
@@ -183,12 +187,14 @@ class Products extends \PDO
     public function newProducts(int $startingPos, int $prodPerPage)
     {
 
-        $stmt = $this->db->prepare("SELECT productId, productTitle, productDesc, productPrice, productModel, mediaId, filepath, filename, mime, categoryName, categoryTypeName
+        $stmt = $this->db->prepare("SELECT productId, productTitle, productDesc, productPrice, brandName, mediaId, filepath, filename, mime, categoryName, categoryTypeName
                                   FROM products
                                   INNER JOIN category 
                                   ON products.fkCategory = category.categoryId
                                   INNER JOIN categorytype
                                   ON category.categoryType = categorytype.categoryTypeId
+                                  INNER JOIN productBrand
+                                  ON products.productBrand = productbrand.brandId
                                   INNER JOIN media 
                                   ON products.fkImage = media.mediaId
                                   ORDER BY productId DESC
@@ -200,22 +206,18 @@ class Products extends \PDO
         return $results;
     } 
 
-    public function searchProducts(string $search, int $startingPos, int $prodPerPage)
+    public function searchProducts(string $search, array $params, int $startingPos, int $prodPerPage)
     {
-        $stmt = $this->db->prepare("SELECT productId, productTitle, productDesc, productPrice, productModel, mediaId, filepath, filename, mime, categoryName, categoryTypeName
-                                  FROM products
-                                  INNER JOIN category 
-                                  ON products.fkCategory = category.categoryId
-                                  INNER JOIN categorytype
-                                  ON category.categoryType = categorytype.categoryTypeId
-                                  INNER JOIN media 
-                                  ON products.fkImage = media.mediaId
-                                  WHERE (products.productTitle LIKE CONCAT('%', :search, '%')
-                                  OR products.productModel LIKE CONCAT ('%', :search, '%'))
-                                  OR (category.categoryName LIKE CONCAT('%', :search, '%'))
-                                  OR (categoryType.categoryTypeName LIKE CONCAT ('%', :search, '%'))
-                                  LIMIT :starting, :limit");
-        $stmt->bindValue(':search', $search, PDO::PARAM_STR);
+        $search .= 'LIMIT :starting, :limit';
+        $stmt = $this->db->prepare($search);
+        foreach($params as $sql => $key) {
+            if($sql == ':searchWord') {
+                $pdoType = PDO::PARAM_STR;
+            } else {
+                $pdoType = PDO::PARAM_INT;
+            }
+            $stmt->bindValue($sql, $key, $pdoType);
+        }
         $stmt->bindValue(':starting', $startingPos, PDO::PARAM_INT);
         $stmt->bindValue(':limit', $prodPerPage, PDO::PARAM_INT);
         $stmt->execute() or die(print_r($stmt->errorInfo()));
@@ -223,12 +225,105 @@ class Products extends \PDO
         return $results;
     }
 
+    public function advSearcHArray(array $post)
+    {
+        $sqlArray = [];
+
+        $i = 0;
+        foreach($post as $sqlKey => $sqlValue) {
+            if($sqlKey == 'brand' && $sqlValue !== '') {
+                $sqlArray['where'][$i] = 'AND products.productBrand = :'.$sqlKey;
+            } 
+            if($sqlKey == 'maxPrice' && $sqlValue !== '') {
+                $sqlArray['price'] = 'AND products.productPrice < '.$sqlValue;
+            }
+            if($sqlKey == 'categoryType' && $sqlValue !== '') {
+                $sqlArray['where'][$i] = 'AND products.fkCategory = :'.$sqlKey;
+            }
+            if($sqlKey == 'searchWord' && $sqlValue !== '') {
+                $sqlArray['searchWord'] = "WHERE (products.productTitle LIKE CONCAT('%', :".$sqlKey.", '%'))
+                                            OR (productbrand.brandName LIKE CONCAT ('%', :".$sqlKey.", '%'))
+                                            OR (category.categoryName LIKE CONCAT('%', :".$sqlKey.", '%'))
+                                            OR (categoryType.categoryTypeName LIKE CONCAT ('%', :".$sqlKey.", '%'))";
+            }
+            $i++;
+        }
+        return $sqlArray;
+    }
+
+    public function advSearchParams(array $post)
+    {
+        $paramsArray = [];
+
+        $i = 0;
+        foreach($post as $sqlKey => $sqlValue) {
+            if(is_numeric($sqlValue)) {
+                $sqlValue = (int) $sqlValue;
+            }
+            if($sqlKey == 'brand' && $sqlValue !== '') {
+                $paramsArray[':'.$sqlKey] = $sqlValue;
+            } 
+            if($sqlKey == 'maxPrice' && $sqlValue !== '') {
+                $paramsArray[':'.$sqlKey] = $sqlValue;
+            }
+            if($sqlKey == 'categoryType' && $sqlValue !== '') {
+                $paramsArray[':'.$sqlKey] = $sqlValue;
+            }
+            if($sqlKey == 'searchWord' && $sqlValue !== '') {
+                $paramsArray[':'.$sqlKey] = $sqlValue;
+            }
+            $i++;
+        }
+        return $paramsArray;
+    }
+
+    public function advSearchSql($post, $sqlArray)
+    {
+        $dynamicSql = "";
+        $dynamicSql .= "SELECT productId, productTitle, productDesc, productPrice, brandName, mediaId, filepath, filename, mime, categoryName, categoryTypeName
+                        FROM products
+                        INNER JOIN category 
+                        ON products.fkCategory = category.categoryId
+                        INNER JOIN categorytype
+                        ON category.categoryType = categorytype.categoryTypeId
+                        INNER JOIN productBrand
+                        ON products.productBrand = productbrand.brandId
+                        INNER JOIN media 
+                        ON products.fkImage = media.mediaId ";
+        if(array_key_exists('searchWord', $sqlArray)) {
+            $dynamicSql .= $sqlArray['searchWord'].' ';
+        }
+        if(array_key_exists('where', $sqlArray)) {
+            if(array_key_exists('searchWord', $sqlArray)) {
+                foreach($sqlArray['where'] as $key => $sql) {
+                    $dynamicSql .= $sql.' ';
+                }
+            } else {
+                foreach($sqlArray['where'] as $key => $sql) {
+                    if($key === 0) {
+                        $sql = str_replace('AND', 'WHERE', $sql);
+                    }
+                    $dynamicSql .= $sql.' ';
+                }
+            }
+            
+        } if(array_key_exists('price', $sqlArray)) {
+            $dynamicSql .= $sqlArray['price'].' ';
+        }
+
+        
+        return $dynamicSql;
+    }
+    
+
     public function getRandomProductsFrontend()
     {
-        return $this->db->query("SELECT productId, productTitle, productPrice, productModel, mediaId, filepath, filename, mime, offerPrice
+        return $this->db->query("SELECT productId, productTitle, productPrice, brandName, mediaId, filepath, filename, mime, offerPrice
                                   FROM products
                                   INNER JOIN offers 
                                   ON products.productId = offers.fkProductId
+                                  INNER JOIN productBrand
+                                  ON products.productBrand = productbrand.brandId
                                   INNER JOIN media 
                                   ON products.fkImage = media.mediaId
                                   ORDER BY RAND()
@@ -237,8 +332,10 @@ class Products extends \PDO
 
     public function getAllProductsFrontEnd($startingPos, $prodPerPage)
     {
-        $stmt = $this->db->prepare("SELECT productId, productTitle, productDesc, productPrice, productModel, mediaId, filepath, filename, mime, categoryName, categoryTypeName
+        $stmt = $this->db->prepare("SELECT productId, productTitle, productDesc, productPrice, brandName, mediaId, filepath, filename, mime, categoryName, categoryTypeName
                                     FROM products
+                                    INNER JOIN productBrand
+                                    ON products.productBrand = productbrand.brandId
                                     INNER JOIN category 
                                     ON products.fkCategory = category.categoryId
                                     INNER JOIN categorytype
@@ -260,7 +357,7 @@ class Products extends \PDO
 
     public function getProd($id)
     {
-        return $this->db->single("  SELECT productId, productTitle, productDesc, productPrice, productModel, mediaId, filepath, filename, mime, fkCategory, fkImage
+        return $this->db->single("  SELECT productId, productTitle, productDesc, productPrice, productBrand, mediaId, filepath, filename, mime, fkCategory, fkImage
                                     FROM products
                                     INNER JOIN category 
                                     ON products.fkCategory = category.categoryId
@@ -336,7 +433,7 @@ class Products extends \PDO
                                     `productDesc`=:desc,
                                     `productPrice`=:price,
                                     `fkCategory`=:category,
-                                    `productModel`=:brand
+                                    `productBrand`=:brand
                                 WHERE productId = :id",
                             [
                                 ':title' => $post['title'],
@@ -352,6 +449,53 @@ class Products extends \PDO
         }
         return false;
     }
-    
 
+    public function newBrand(array $post)
+    {
+        try {
+            $this->db->query("INSERT INTO productbrand(brandName) VALUES (:brand)", [':brand' => $post['brand']]);
+            return true;
+        } catch(PDOException $e) {
+            return false;
+        }
+        return false;
+    }
+
+    public function getBrands()
+    {
+        try {
+            return $this->db->query("SELECT * FROM productbrand");
+        } catch(PDOException $e) {
+            return false;
+        }
+        return false;
+    }
+
+    public function currentBrand(string $id)
+    {
+        return $this->db->single("SELECT * FROM productbrand WHERE brandId = :id", [':id' => $id]);
+    }
+
+    public function updateBrand(array $post, string $id)
+    {
+        try {
+            $this->db->query("UPDATE productbrand SET brandName = :name WHERE brandId = :id", [':name' => $post['brand'], ':id' => $id]);
+            return true;
+        } catch(PDOException $e) {
+            return false;
+        }
+        return false;
+    }
+
+    public function deleteBrand(string $id)
+    {
+        try {
+            $this->db->query("DELETE FROM productbrand WHERE brandId = :id", [':id' => $id]);
+            return true;
+        } catch(PDOException $e) {
+            return false;
+        }
+        return false;
+    }
 }
+    

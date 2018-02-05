@@ -19,7 +19,7 @@ class Pagination extends \PDO
         return $startingPostion;
     }
 
-    public function pagingLink($query, $recordsPerPage, $params, $getParam)
+    public function pagingLink($query, $recordsPerPage, $params, $getParam, $pageLink)
     {
         $category = '';
         if(isset($_GET['kategori'])) {
@@ -28,9 +28,9 @@ class Pagination extends \PDO
         // foreach($_GET as $get => $value) { if($get !== 'p' && $get !== 'side_tal') { echo 'get: '.$get.' value: '.$value.'<br>'; } }
         
         $stmt = $this->db->query($query, $params);
-
+        
         $totalAmount = sizeof($stmt);
-        if($totalAmount > 3) {
+        if($totalAmount > 2) {
             echo '<table id="data" class="pagination">';
             echo '<tr><td>';
             $totalPages = ceil($totalAmount/$recordsPerPage);
@@ -40,7 +40,7 @@ class Pagination extends \PDO
             }       
             for($i = 1; $i <= $totalPages; $i++) {
                 if($i == $currentPage) {
-                    $link = '<a href="?p=produktliste';
+                    $link = '<a href="'.$pageLink.'';
                     foreach($getParam as $get => $value) { 
                         if($get !== 'p' && $get !== 'side_tal') { 
                             $link .= '&'.$get.'='.$value; 
@@ -49,7 +49,7 @@ class Pagination extends \PDO
                     $link .= '&side_tal='.$i.'" style="border:none;cursor:default">'.$i.'</a>&nbsp;&nbsp;';
                     echo $link;
                 } else {
-                    $link = '<a href="?p=produktliste';
+                    $link = '<a href="'.$pageLink.'';
                     foreach($getParam as $get => $value) { 
                         if($get !== 'p' && $get !== 'side_tal') { 
                             $link .= '&'.$get.'='.$value; 

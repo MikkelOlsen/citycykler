@@ -152,9 +152,8 @@ time, mark, audio, video {
     background-color: #5e7a86;
 }
 
-#sitesettingsForm input[type="text"]{
-    padding: 0 !important;
-    border: 2px solid red !important;
+#sitesettingsForm input{
+    padding: 5px !important;
 }
 
 
@@ -241,6 +240,14 @@ time, mark, audio, video {
 
 .customTable .btns > a:first-of-type{
     color: red;
+}
+
+.brandsTable td{
+    width: 50% !important;
+}
+
+.catTable td, th{
+    width: 33% !important;
 }
 
 /*=====  End of TABLES CSS  ======*/
