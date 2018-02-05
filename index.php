@@ -4,8 +4,20 @@
         require_once './config.php';
         
         $security = new Security($db);
-
+        $pages = new Pages($db);
+        $sitesettings = $pages->siteSettings();
+        $sitePhone = rtrim(chunk_split($sitesettings->phone, 2, ' '), ' ');
+        $siteFax = rtrim(chunk_split($sitesettings->fax, 2, ' '), ' ');
         $pageTitel = ucfirst($_GET['p']);
+        if(isset($_GET['p']) && $_GET['p'] == 'produkt') {
+            $pageTitel = 'Mere info';
+        }
+
+        if(isset($_GET['kategori'])) {
+            $cat = new Products($db);
+            $catName = $cat->getCatName($_GET['kategori']);
+            $catName = ' - '.$catName->categoryName;
+        }
     ?>
 
 <!DOCTYPE html>
@@ -14,7 +26,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>City Cykler</title>
+    <title><?= $sitesettings->siteTitle ?></title>
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
@@ -27,7 +39,7 @@
                 <?php include_once './includes/nav.php'; ?>
                     <div class="container">
                     <div class="headerTitles">
-                        <h2 class="siteTitel"><?= $pageTitel ?></h2>
+                        <h2 class="siteTitel"><?= $pageTitel ?><?= @$catName ?></h2>
                         <h2 class="siteTitel">Tilbud</h2>
                     </div>
                     <div class="content">
@@ -41,12 +53,20 @@
                                 include_once './partials/home.php';
                                 break;
                             
-                            case 'cykler':
-                                include_once './partials/bicycles.php';
+                            case 'kategori':
+                                include_once './partials/categories.php';
                                 break;
 
-                            case 'cykelliste':
-                                include_once './partials/bicycleList.php';
+                            case 'produktliste':
+                                include_once './partials/productList.php';
+                                break;
+
+                            case 'produkt':
+                                include_once './partials/product.php';
+                                break;
+
+                            case 'kontakt':
+                                include_once './partials/contact.php';
                                 break;
 
                             default:

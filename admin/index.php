@@ -55,6 +55,18 @@
                             case 'produkter':
                                 include_once './partials/products.php';
                                 break;
+
+                            case 'delProd':
+                                include_once './handlers/delProd.php';
+                                break;
+
+                            case 'redigerProdukt':
+                                include_once './handlers/editProd.php';
+                                break;
+
+                            case 'sitesettings':
+                                include_once './handlers/siteSettings.php';
+                                break;
                             
                             
 

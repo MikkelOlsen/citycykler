@@ -1,17 +1,17 @@
 <?php
-    $prod = new Products($db);
+    $products = new Products($db);
     $image = new ImageHandler($db);
 
-    $currentCat = $prod->getCat($_GET['catId']);
-    $categoryTypes = $prod->getCategoryTypes();
+    $currentCat = $products->getCat($_GET['catId']);
+    $categoryTypes = $products->getCategoryTypes();
     // var_dump($currentCat);
     if(isset($_POST['btn_update'])) {
         // var_dump($_POST);
         // var_dump($_FILES);
-        if($prod->updateCat($_GET['catId'], $_POST) == true) {
-            $currentCat = $prod->getCat($_GET['catId']);
-        }
+        
         if(!empty($_FILES['files']['name'])) {
+            $path = $products->getCatTypeName($_POST['categoryType']);
+            $pathName = strtolower($path->categoryTypeName);
             $options = array(
                 'validExts' => array(
                     'jpeg',
@@ -20,14 +20,19 @@
                     'gif'
                 ),
                 'sizes' => array(
-                    'height' => '80',
-                    'width' => '116'
+                    'medium' => array(
+                        'height' => '80',
+                        'width' => '116'
+                    )
                 ),
-                'path' => '../test',
+                'path' => '../assets/images/products/categories/'.$pathName,
                 'mediaId' => $currentCat->categoryImage
             );
             $image->updateImg($_FILES['files'], $options);
         } 
+        if($products->updateCat($_GET['catId'], $_POST) == true) {
+            $currentCat = $products->getCat($_GET['catId']);
+        }
     }
 ?>
 
@@ -58,6 +63,6 @@
     </div>
     <div class="form-style-6">
         <h1>Nuværende Billede</h1>
-        <img src="<?= $currentCat->filepath.'/'.$currentCat->filename.'.'.$currentCat->mime?>" alt="">
+        <img src="<?= $currentCat->filepath.'/116x80_'.$currentCat->filename.'.'.$currentCat->mime?>" alt="">
     </div>
 </div>

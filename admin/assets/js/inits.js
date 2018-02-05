@@ -28,4 +28,10 @@ Array.prototype.forEach.call( inputs, function( input )
 	});
 });
 
-document.multiselect('#multiColor');
+var select_element = document.getElementById('multiColor');
+multi( select_element, {
+	'enable_search': true,
+    'search_placeholder': 'Søg...',
+    'non_selected_header': 'Farve muligheder',
+    'selected_header': 'Valgte farver'
+} );

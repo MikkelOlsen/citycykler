@@ -5,6 +5,8 @@
 
     $pos = strrpos($content->filepath, ".");
     $stripped = substr($content->filepath, $pos);
+
+    
 ?>
 
 <div class="homeContent">

@@ -1,16 +1,22 @@
+<?php
+    $products = new Products($db);
+    
+    $randomProducts = $products->getRandomProductsFrontend()
+;?>
+
 <div class="aside">
     <div class="offers">
-        <h3>Produkt Titel</h3>
-        <img src="./assets/images/products/Cykler/barn1.jpg" alt="">
-        <p>Før <span class="prevPrice">2000</span> kr.</p>
-        <p class="newPrice">Nu kun 1500 kr</p>
-        <h3>Produkt Titel</h3>
-        <img src="./assets/images/products/Cykler/barn1.jpg" alt="">
-        <p>Før <span class="prevPrice">2000</span> kr.</p>
-        <p class="newPrice">Nu kun 1500 kr</p>
-        <h3>Produkt Titel</h3>
-        <img src="./assets/images/products/Cykler/barn1.jpg" alt="">
-        <p>Før <span class="prevPrice">2000</span> kr.</p>
-        <p class="newPrice">Nu kun 1500 kr</p>
+        <?php 
+            foreach($randomProducts as $product) {
+                $pos = strrpos($product->filepath, ".");
+                $stripped = substr($product->filepath, $pos);
+                echo '<a href="?p=produkt&id='.$product->productId.'">';
+                echo '<h3>'.$product->productModel.' '.$product->productTitle.'</h3>';
+                echo '<img src="'.$stripped.'/69x48_'.$product->filename.'.'.$product->mime.'" alt="'.$product->productTitle.'">';
+                echo '<p>Før <span class="prevPrice">'.$product->productPrice.'</span> kr.</p>';
+                echo '<p class="newPrice">Nu kun '.$product->offerPrice.' kr.</p>';
+                echo '</a>';
+            }
+        ?>
     </div>
 </div>

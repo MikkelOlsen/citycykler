@@ -230,6 +230,10 @@ p {
     color: #a4a4a4;
 }
 
+.footerContent > .footerInfo > p::after {
+    content: "\00a0";
+}
+
 /*=====  End of Footer CSS  ======*/
 
 
@@ -248,21 +252,24 @@ p {
     box-sizing: border-box;
 }
 
-.aside > .offers {
+
+.aside > .offers a {
     display: grid;
     justify-items: center;
+    text-decoration: none;
+    color: black;
 }
 
-.aside > .offers > p {
+.aside > .offers > a > p {
     line-height: 1.3em;
 }
 
-.aside > .offers > p > .prevPrice {
+.prevPrice {
     position: relative;
     display: inline-block;
 }
 
-.aside > .offers > p > .prevPrice::before {
+.prevPrice::before {
     content: '';
     border-bottom: 1px solid black;
     width: 100%;
@@ -271,12 +278,8 @@ p {
     top: 50%;
 }
 
-.aside > .offers > .newPrice {
+.newPrice {
     color: red;
-}
-
-.aside > .offers > img {
-    height: 80px;
 }
 
 
@@ -313,12 +316,12 @@ p {
 =                Bicycles CSS                 =
 =============================================*/
 
-.bicyclesContent {
+.categoriesContent {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
 }
 
-.bicyclesContent > .categories {
+.categoriesContent > .categories {
     grid-column: 2/6;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -331,17 +334,20 @@ p {
     padding-top: 50px;
 }
 
-.bicyclesContent > .categories > a {
+.categoriesContent > .categories > a {
     text-decoration: none;
     color: black;
 }
 
-.bicyclesContent > .categories > a > div {
+.categoriesContent > .categories > a > div {
+    display: grid;
     align-self: start;
+    align-items: center;
+    justify-items: center;
 }
 
 
-.bicyclesContent > .categories > a > div > img {
+.categoriesContent > .categories > a > div > img {
     width: 116px;
     height: 80px;
 }
@@ -358,45 +364,136 @@ p {
     display: grid;
     align-self: start;
     grid-template-columns: 1fr;
-    grid-row-gap: 20px;
-    
+    height: 100%;
 }
 
-.productContent > .productList {
+.productContent .products {
+    display: grid;
+    grid-row-gap: 20px;
+}
+
+.productContent .productList {
     width: 95%;
     justify-self: center;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     border: 2px solid #ededed;
     padding: 10px;
+    height: 114px;
 }
 
-.productContent > .productList > .productInfo {
+.productContent .productList > .productInfo {
     display: grid;
     grid-column: 1/5;
 }
 
-.productContent > .productList > .productInfo > .productPrice {
+.productContent .productList > .productInfo > .productPrice {
     display: grid;
     grid-template-columns: 1fr 1fr;
     padding-top: 30px;
 }
 
-.productContent > .productList > .productInfo > .productPrice > a {
+.productContent .productList > .productInfo > .productPrice > a {
     color: #FF9E41;
     font-weight: bold;
     justify-self: end;
     font-size: 11px;
 }
 
-.productContent > .productList > img {
+.productContent .productList > img {
     grid-column: 6/7;
-    justify-self: end;
+    align-self: end;
     width: 116px;
     height: 80px;
 }
 
+#data {
+    display: grid !important;
+    justify-self: end !important;
+    align-self: end !important;
+}
+#data td a {
+    color: #FF9E41;
+    font-weight: bold;
+    text-decoration: none;
+    border-bottom: 1px solid #FF9E41;
+    padding-bottom: 1px;
+}
+
 
 /*=====  End of Productlist CSS  ======*/
+
+
+
+/*=============================================
+=              Single Product CSS             =
+=============================================*/
+
+.singleProduct {
+    display: grid;
+    grid-template-areas: "img productInfo" "colors price";
+    grid-template-columns: 200px auto;
+}
+
+.singleProduct > img {
+    grid-area: img;
+    align-self: center;
+    justify-self: center;
+}
+
+.singleProduct .productInformation {
+    grid-area: productInfo;
+}
+
+.singleProduct .colors {
+    grid-area: colors;
+}
+
+.singleProduct .colors > img {
+    padding-right: 5px;
+    height: 18px;
+}
+
+.singleProduct .price {
+    grid-area: price;
+}
+
+/*=====  End of Single Product CSS  ======*/
+
+
+
+/*=============================================
+=                 CONTANT CSS                 =
+=============================================*/
+
+.contactSection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:  "info img";
+}
+
+.contactSection .infoBox {
+    grid-area: info;
+    width: 80%;
+    height: 80%;
+    justify-self: center;
+    align-self: center;
+}
+
+.contactSection .infoBox p {
+    font-size: 1em;
+}
+
+.contactSection .infoBox p:first-of-type {
+    font-weight: bolder;
+
+}
+
+.contactSection .img {
+    grid-area: img;
+}
+
+
+/*=====  End of CONTANT CSS  ======*/
 
 

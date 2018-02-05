@@ -26,6 +26,26 @@ class Pages extends \PDO
         }
         return false;
     }
+
+    public function siteSettings()
+    {
+        return $this->db->single("SELECT * FROM sitesettings");
+    }
+    
+    public function updateSettings(array $post)
+    {
+        $this->db->query("UPDATE sitesettings SET siteTitle = :title, street = :street, zipcode = :zip, city = :city, phone = :phone, fax = :fax, email = :email", 
+        [
+            ':title' => $post['title'],
+            ':street' => $post['street'],
+            ':zip' => $post['zip'],
+            ':city' => $post['city'],
+            ':phone' => $post['phone'],
+            ':fax' => $post['fax'],
+            ':email' => $post['email']
+        ]); 
+        return true;
+    }
     
 
 }

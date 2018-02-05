@@ -152,6 +152,11 @@ time, mark, audio, video {
     background-color: #5e7a86;
 }
 
+#sitesettingsForm input[type="text"]{
+    padding: 0 !important;
+    border: 2px solid red !important;
+}
+
 
 /*=====  End of FORM CSS  ======*/
 
@@ -166,12 +171,47 @@ time, mark, audio, video {
     grid-area: content;
     width: 100%;
     color: white;
+    display: block;
+    height: 300px;
 }
 
+.customTable thead, tbody, tr, th, td { display: block; width: 100%;}
+
 .customTable td, .customTable th {
-    border: 1px solid #ededed;
-    padding: 8px;
+    padding: 11px;
 }
+
+
+.customTable thead tr {
+    background-color: #4CAF50;
+    width: 97%;
+    width: -webkit-calc(100% - 16px);
+    width:    -moz-calc(100% - 16px);
+    width:         calc(100% - 16px);
+}
+
+.customTable thead tr:hover {
+    background-color: #4CAF50;
+}
+
+.customTable tr:after { 
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+.customTable tbody {
+    height: 300px;
+        display: inline-block;
+        width: 100%;
+        overflow-y:scroll;
+}
+
+.customTable tbody td, thead th {
+    width: 16%;  /* 19% is less than (100% / 5 cols) = 20% */
+    float: left;
+}
+    
 
 .customTable tr {background-color: #37474f;}
 
@@ -193,7 +233,6 @@ time, mark, audio, video {
     justify-content: space-around;
     display: flex;
     border: none;
-    border-bottom: 1px solid #ededed;
 }
 
 .customTable .btns > i {

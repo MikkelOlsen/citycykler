@@ -11,7 +11,7 @@
           <a class="mdl-navigation__link" href="?p=forside"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Rediger Forside</a>
           <a class="mdl-navigation__link" href="?p=kategorier"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Kategorier</a>
           <a class="mdl-navigation__link" href="?p=produkter"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">delete</i>Produkter</a>
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">report</i>Spam</a>
+          <a class="mdl-navigation__link" href="?p=sitesettings"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">report</i>Side/Firma informationer</a>
           <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>Forums</a>
           <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">flag</i>Updates</a>
           <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">local_offer</i>Promos</a>

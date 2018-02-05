@@ -12,13 +12,12 @@ class ImageHandler extends \PDO {
     public function imageHandler(array $files, array $options = [] )
     {
         try {
-            if(!file_exists($options['path'])) {
-                mkdir($options['path'], 0777, true);
-            }
+            foreach($options['sizes'] as $size) {
             $validExts = $options['validExts'];
-            $width = $options['sizes']['width'];
-            $height = $options['sizes']['height'];
+            $width = $size['width'];
+            $height = $size['height'];
             $ext = strtolower(pathinfo($files['name'], PATHINFO_EXTENSION));
+            $uniqueName = md5($files['name']);
             if(in_array($ext, $validExts)) {
                 list($w, $h) = getimagesize($files['tmp_name']);
                 /* calculate new image size with ratio */
@@ -26,8 +25,7 @@ class ImageHandler extends \PDO {
                 $h = ceil($height / $ratio);
                 $x = ($w - $width / $ratio) / 2;
                 $w = ceil($width / $ratio);
-                $fileName = $width.'x'.$height.'_'.$files['name'];
-                $without_extension = substr($fileName, 0, strrpos($fileName, '.'.$ext));
+                $fileName = $width.'x'.$height.'_'.$uniqueName.'.'.$ext;
                 $path = $options['path'].'/'.$fileName;
                 /* read binary data from image file */
                 $imgString = file_get_contents($files['tmp_name']);
@@ -54,9 +52,18 @@ class ImageHandler extends \PDO {
                     exit;
                     break;
                 }
+            } else {
+                echo 'not valid';
+            } 
+        }
+        
+            if(!file_exists($options['path'])) {
+                mkdir($options['path'], 0777, true);
+            }
+
                 $returnArray = array(
                     'filePath' => $options['path'],
-                    'fileName' => $without_extension,
+                    'fileName' => $uniqueName,
                     'mime' => $ext
                 );
                 if(isset($options['create']) && $options['create'] == true) {
@@ -67,10 +74,7 @@ class ImageHandler extends \PDO {
                 /* cleanup memory */
                 imagedestroy($image);
                 imagedestroy($tmp);
-            } 
-            else {
-                echo 'not valid';
-            }
+            
         
         } catch(PDOException $e) {
 
@@ -89,9 +93,11 @@ class ImageHandler extends \PDO {
             if($delete == true) {
                 $this->db->query("DELETE FROM media WHERE mediaId = :id", [':id' => $mediaId]);
             }
-            var_dump($infoArray);
-            if(file_exists($infoArray->filepath.'/'.$infoArray->filename.'.'.$infoArray->mime)) {
-                unlink($infoArray->filepath.'/'.$infoArray->filename.'.'.$infoArray->mime);
+            $files = glob($infoArray->filepath.'/*'.$infoArray->filename.'.'.$infoArray->mime);
+            foreach($files as $file) {
+                if(file_exists($file)) {
+                    unlink($file);
+                }
             }
             return true;
         } catch(PDOException $e) {
@@ -103,10 +109,8 @@ class ImageHandler extends \PDO {
     public function updateImg(array $files, array $options = [])
     {
        $infoArray = $this->imageHandler($files, $options);
-    //    echo '<br><br>test<br>';
-    //    var_dump($infoArray);
-    //    echo $infoArray['filepath'];
-         if($this->unlinkImage($options['mediaId']) == true) {
+
+        //  if($this->unlinkImage($options['mediaId']) == true) {
            try {
             $this->db->query("UPDATE `media` SET `filepath`=:path, `filename`=:name, `mime`=:mime WHERE mediaId = :id", 
             [
@@ -120,6 +124,6 @@ class ImageHandler extends \PDO {
                return false;
            }
            return false;
-       }
+    //    }
     }
 }

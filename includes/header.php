@@ -6,7 +6,7 @@
     </div>
     </div>
     <div class="search">
-        <form method="post">
+        <form method="post" action="?p=produktliste">
             <input type="text" name="search" id="search"><br>
             <input type="submit" value="Søg" name="btn_search" id="btn_search"><a id="adv_search" href="#">Avanceret søg</a>
         </form>

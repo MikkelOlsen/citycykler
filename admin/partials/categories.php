@@ -17,8 +17,10 @@ if(isset($_POST['btn_create'])) {
                 'gif'
             ),
             'sizes' => array(
-                'height' => '80',
-                'width' => '116'
+                'medium' => array(
+                    'height' => '80',
+                    'width' => '116'
+                )
             ),
             'path' => '../assets/images/products/categories/'.$pathName,
             'create' => true
